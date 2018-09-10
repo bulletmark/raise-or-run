@@ -1,4 +1,4 @@
-## Linux shell script to raise app window, or run app if window not already open
+## RAISE-OR-RUN
 
 This is is a simple bash script which is called with an argument app and
 file which you want to open. If there is already a window open with that
