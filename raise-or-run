@@ -1,0 +1,58 @@
+#!/bin/bash
+# Script to run an app with given file but if app already running with
+# that file open in a window, then switch to that window.
+# Requires wmctrl to be installed.
+# M.Blakeney, Oct 2015.
+
+usage() {
+    echo "Usage: $(basename $0) [-options] <app> [file]"
+    echo "Options"
+    echo "-c <WM class> Use specified class instead of assuming app name as WM class"
+    exit 1
+}
+
+WMCLASS=""
+while getopts c: c; do
+    case $c in
+    c) WMCLASS=$OPTARG;;
+    ?) usage;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+if [ $# -eq 1 ]; then
+    FILE=""
+elif [ $# -eq 2 ]; then
+    FILE="$2"
+else
+    usage
+fi
+
+if ! hash wmctrl &>/dev/null; then
+    echo "wmctrl is not installed"
+    exit 1
+fi
+
+APP="$1"
+BFILE=$(basename "$FILE")
+
+if [ -z "$WMCLASS" ]; then
+    WMCLASS=$(basename "$APP")
+fi
+
+# Look for existing open window for this app [+ file]
+if [ -z "$BFILE" ]; then
+    winid=$(wmctrl -lx | grep -i " $APP\.$WMCLASS " | cut -f1 -d' ')
+else
+    winid=$(wmctrl -lx | grep -i " $APP\.$WMCLASS " | grep " $BFILE " | \
+	cut -f1 -d' ')
+fi
+
+# If app already running for this window then switch to it
+if [ -n "$winid" ]; then
+    exec wmctrl -ia "$winid"
+fi
+
+# Else start app for this file
+exec $APP $FILE
