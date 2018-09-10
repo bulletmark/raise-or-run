@@ -9,7 +9,7 @@ the argument. It can be used with multiple independent files, each opened in
 parallel in their own app window. This script uses
 [wmctrl](https://sites.google.com/site/tstyblo/wmctrl) to determine the
 classes and file names of already open windows, and also to select an
-open window.
+open window. Note that this works on both Xorg and Wayland (via XWayland).
 
 The latest version and documentation is available at
 http://github.com/bulletmark/raise-or-run.
