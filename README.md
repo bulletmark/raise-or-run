@@ -1,11 +1,14 @@
 ## Linux shell script to raise app window, or run app if window not already open
 
-This is is a simple bash script which is called with an argument "app"
-which you want to start. If there is already a window open with that
-app's window manager class then that window is raised and given focus,
-otherwise if there is no window already open then the app is started. This
-script uses [wmctrl](https://sites.google.com/site/tstyblo/wmctrl) to
-determine the classes of already open windows, and also to select an
+This is is a simple bash script which is called with an argument app and
+file which you want to open. If there is already a window open with that
+app's window manager class for the specific file you want to open then
+that window is raised and given focus, otherwise if there is no window
+already open for that file, then the app is started with that file as
+the argument. It can be used with multiple independent files, each opened in
+parallel in their own app window. This script uses
+[wmctrl](https://sites.google.com/site/tstyblo/wmctrl) to determine the
+classes and file names of already open windows, and also to select an
 open window.
 
 The latest version and documentation is available at
@@ -40,8 +43,10 @@ to:
     Exec=/usr/bin/raise-or-run kmymoney %u
 
 Now when I click on a [KMyMoney](https://kmymoney.org/) file, it jumps
-to an open window if one exists, or if not then it starts the app to
-open a new window.
+to an open window if one exists for that file, or if not then it starts
+the app to open that file in a new window. This works also when you have
+multiple but independent KMyMoney files being opened in multiple
+parallel windows.
 
     Usage: raise-or-run [-options] <app> [file]
     Options
