@@ -1,4 +1,5 @@
 ## RAISE-OR-RUN
+[![AUR](https://img.shields.io/aur/version/raise-or-run)](https://aur.archlinux.org/packages/raise-or-run/)
 
 This is is a simple bash script which is called with an argument app and
 file which you want to open. If there is already a window open with that
